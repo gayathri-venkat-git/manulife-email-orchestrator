@@ -1,0 +1,10 @@
+import joblib
+import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+model_path = os.path.join("models", "classifier.pkl")
+classifier, vectorizer = joblib.load(model_path)
+
+def classify_priority(text):
+    vec = vectorizer.transform([text])
+    return classifier.predict(vec)[0]
