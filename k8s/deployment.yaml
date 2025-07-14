@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-orchestrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email-orchestrator
+  template:
+    metadata:
+      labels:
+        app: email-orchestrator
+    spec:
+      containers:
+      - name: app
+        image: gayathrivenkat/email-orchestrator:latest
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: email-orchestrator-service
+spec:
+  selector:
+    app: email-orchestrator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
